@@ -1,61 +1,50 @@
-import BullCow.hasDups
-
 object bulls extends App {
-var attempts = 0
-  def getRandomUniqueDigit(digitSeq: String = "0123456789", getDigitCount: Int = 4) = {
+  // TODO GenerateSet
+  def getRandomUniqueDigits(digitSeq: String = "0123456789", getDigitCount: Int = 4) = {
     val digitList = digitSeq.toList
     val shuffledList = scala.util.Random.shuffle(digitList)
     val offset = if (shuffledList(0) != '0') 0 else 1
-    val myDigits = shuffledList.slice(offset, getDigitCount+offset)
-    myDigits.mkString(" ")
+    val myDigits = shuffledList.slice(offset, getDigitCount + offset)
+    myDigits
   }
-  println(getRandomUniqueDigit(getDigitCount = 4))
-  println(getRandomUniqueDigits(getDigitCount = 4))
 
-  // TODO jāizvēlas viens no def kurš labāku random ciparu dod
-    def getRandomUniqueDigits(digitSeq: String = "0123456789", getDigitCount: Int = 4) = {
-      val digitList = digitSeq.toList
-      val shuffledList = scala.util.Random.shuffle(digitList)
-      val offset = if (shuffledList(0) != '0') 0 else 1
-      val myDigits = shuffledList.slice(offset, getDigitCount + offset)
-      //    println(myDigits.mkString(""))
-      myDigits.mkString("").toInt
+  val baseNumber = getRandomUniqueDigits()
+  println(baseNumber)
 
-      //  println(getRandomUniqueDigits(getDigitCount = 5))
-      //  println("*"*30)
-      //  println(getRandomUniqueDigits())
-      //  for (i <- 0 to 10) println(getRandomUniqueDigits())
-      //    val lotsOfNumbers = for (i <- 1 to 10000) yield getRandomUniqueDigits()
-      //    val under1200 = lotsOfNumbers.filter(_ < 1200)
-      //  under1200.foreach(println)
-    }
-
-  // Start a game
-
-  println("\nWelcome to Bulls and Cows game!\nYou need to guess a 4-digit number with no duplicate digits")
-
-
+  // TODO StartGame
+  println("Welcome to Bulls and Cows game!\nYou need to guess a 4-digit number with no duplicate digits")
   println("There are two hints:\nCows will hint matching digits of your guess but in incorrect position\nBulls will hint how many of your guessed digits matches and is in the correct position\n")
-  print("Guess a 4-digit number with no duplicate digits: ")
+
+
   // TODO Bulls and Cows validation
-//  val input = Console.readInt
-//  val digits = input.toString.map(_.asDigit).toList
-//  if (input >= 1111 && input <= 9999 && !hasDups(digits)) {
-
+  var attempts =0
+  val maxAttempts = 15
+  var won = false
+  var lost = false
+  while (!won && !lost) {
     attempts += 1
-    var bulls, cows = 0
-    for (i <- 0 to 3)
-
-      cows += 1
-
-    if (bulls == 4)
-
-      println(s"$cows Cows and $bulls Bulls.".format(cows, bulls))
-
-    //    // TODO won/ lost the game
-    //    if (attempts < maxTries)
-    //      println(s"You won after $attempts guesses!")
-    //    else print(s"You didn't guess after $maxTries, correct number was $generateNumber")
-    //  }
+    var bulls = 0
+    var cows = 0
+    println("Please enter 4-digit number")
+    val userGuess = scala.io.StdIn.readLine()
+    val userGuessList = userGuess.toList
+    for (i <- 0 to 3) {
+      if (baseNumber(i) == userGuessList(i)) {
+        bulls += 1
+      }
+      else if (baseNumber.contains(userGuessList(i)))
+        cows += 1
+    }
+    if (bulls == 4) {
+      won = true
+    }
+    if (won) {
+      println(s"You won in $attempts attempts!")
+    } else if (attempts >= maxAttempts) {
+      println("You loose! Too many attempts")
+      lost = true
+    } else {
+      println(s"You have $bulls bulls and $cows cows. Try again!")
+    }
   }
 }
