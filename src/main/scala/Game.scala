@@ -1,11 +1,11 @@
 object Game extends App {
   val systemDigitCount = 4 //how many digits in computer generated number and how many allowed for guess
 
-  var systemSet : Set[String] = Set()
-  var guessSet : Set[String] = Set()
-
   var systemString = ""
+  var systemSet : Set[String] = Set()
+
   var guessString = ""
+  var guessSet : Set[String] = Set()
 
   var guessBulls = 0 // returns to zero after each attempt
   var guessCows = 0 // returns to zero after each attempt
@@ -19,16 +19,17 @@ object Game extends App {
 
 
 
-  generateSystemSet()
-  startGameMessage()
+  generateSystemSet() // computes generates string and set of 4 unique digits
+  startGameMessage() // simply start messages and game rules
 
-  while ( !gameWon && !gameEnd && !gameLost ) {
+  // and this is the main functionality of the game
+  while ( !gameWon && !gameEnd && !gameLost ) { // continues while you haven't won, existed or lost the game
     readGuess()
 
     if( !gameEnd ){
-      compareGuessSetAndSystemSet()
-      checkVictoryHandleCounters()
-      midGameMessage()
+      compareGuessSetAndSystemSet() // compares input guess against systems' generated number, counts bulls and cows
+      checkVictoryHandleCounters()  //checks either game is won when there are 4 bulls meaning guess is correct or lost also adds guess attempts as they cannot be more than 10
+      midGameMessage() // informs about hints of how many bulls and how many cows you have
     }
   }
 
@@ -43,7 +44,7 @@ object Game extends App {
 
 
 
-
+//methods:
   def generateSystemSet(digitString: String = "0123456789") = {
       val digitList = digitString.toList
       val shuffledList = scala.util.Random.shuffle(digitList)
@@ -63,7 +64,7 @@ object Game extends App {
    println("There are two hints:\nCows will hint matching digits of your guess but in incorrect position\nBulls will hint how many of your guessed digits matches and are in the correct position\n")
    println("If you want to exit the game write [exit]")
  }
-  def readGuess(){
+  def readGuess(){  // continues until you provide valid guess or you write exit
     var validGuess = false
 
     while ( !validGuess && !gameEnd ) {
