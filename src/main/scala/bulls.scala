@@ -1,4 +1,4 @@
-object CowsBulls extends App {
+object bulls extends App {
   // GenerateSet of unique digits
   def getRandomUniqueDigits(digitSeq: String = "0123456789", getDigitCount: Int = 4) = {
     val digitList = digitSeq.toList
@@ -11,7 +11,7 @@ object CowsBulls extends App {
   val computerGeneratedNumber = getRandomUniqueDigits()
   println(computerGeneratedNumber) //in real game this won't be visible
 
-  // StartGame
+  // StartGame message and rules
   println("Welcome to Bulls and Cows game!\nYou need to guess a 4-digit number with no duplicate digits")
   println("There are two hints:\nCows will hint matching digits of your guess but in incorrect position\nBulls will hint how many of your guessed digits matches and is in the correct position\n")
 
@@ -26,6 +26,7 @@ object CowsBulls extends App {
     var bulls = 0
     var cows = 0
 
+    //starts game for the player
     println("Please enter 4-digit number without duplicate digits ")
 
     val userGuess = scala.io.StdIn.readLine()
